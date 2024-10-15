@@ -2,7 +2,7 @@ class Solution {
 public:
     long long minimumSteps(string s) {
         long long swapball=0;
-        int black=0;
+        long long black=0;
         int n=s.length();
 
         for(int i=0;i<n;i++)
@@ -10,7 +10,7 @@ public:
 
             if(s[i]=='0')
             {
-                swapball += (long long) black;
+                swapball += black;
             }
             else{
                 black++;
