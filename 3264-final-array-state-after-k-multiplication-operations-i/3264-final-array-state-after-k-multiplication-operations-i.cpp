@@ -1,29 +1,27 @@
+typedef pair<long , int> pi;
 class Solution {
 public:
-    struct compare {
-        bool operator()(pair<int, int> a, pair<int, int> b) {
-            if (a.first == b.first) {
-                return a.second > b.second;
-            }
-            return a.first > b.first;
-        }
-    };
+    
 
     vector<int> getFinalState(vector<int>& nums, int k, int multiplier) {
-        priority_queue<pair<int, int>, vector<pair<int, int>>, compare> pq;
-        for (int i = 0; i < nums.size(); i++) {
-            pq.push({nums[i], i});
+        priority_queue<pi, vector<pi>, greater<pi>>minHeap;
+        
+        int n = nums.size();
+        for(int i=0;i<n;i++)
+            minHeap.push({nums[i], i});
+        
+        while(k--)
+        {
+            auto [val, idx] = minHeap.top(); minHeap.pop();
+            minHeap.push({val * multiplier, idx});
         }
-        while (k--) {
-            auto Y = pq.top();
-            pq.pop();
-            pq.push({Y.first * multiplier, Y.second});
+
+        vector<int>ans(n);
+        while(!minHeap.empty())
+        {
+            auto [val, idx] = minHeap.top(); minHeap.pop();
+            ans[idx] = val;
         }
-        while (!pq.empty()) {
-            auto to = pq.top();
-            pq.pop();
-            nums[to.second] = to.first;
-        }
-        return nums;
+        return ans;
     }
 };
